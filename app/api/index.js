@@ -14,5 +14,14 @@ router.get('/weather', function(req, res){
   });
 });
 
+router.post('/weather', function(req, res){
+  var weather = req.body;
+  Weather.create(weather, function(err, weather){
+    if(err){
+      return res.status(500).json({err: err.message});
+    }
+    res.json({weather: weather, message: 'Weather point added'});
+  });
+});
 
 module.exports = router;
