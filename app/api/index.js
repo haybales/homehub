@@ -38,4 +38,14 @@ router.put('/weather/:id', function(req, res){
   });
 });
 
+router.delete('/weather/:id', function(req, res){
+  var id = req.params.id;
+  Weather.findByIdAndRemove(id, function(err){
+    if(err){
+      return res.status(500).json({err: err.message});
+    }
+    res.json({message: 'Weather point deleted'});
+  });
+});
+
 module.exports = router;
