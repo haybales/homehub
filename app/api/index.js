@@ -14,6 +14,16 @@ router.get('/weather', function(req, res){
   });
 });
 
+router.get('/weather/:id', function(req, res){
+  var id = req.params.id;
+  Weather.find({_id: id}, function(err, weathers){
+    if(err){
+      return res.status(500).json({message: err.message});
+    }
+    res.json({posts: weathers});
+  });
+});
+
 router.post('/weather', function(req, res){
   var weather = req.body;
   Weather.create(weather, function(err, weather){
