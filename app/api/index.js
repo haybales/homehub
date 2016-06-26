@@ -24,4 +24,18 @@ router.post('/weather', function(req, res){
   });
 });
 
+router.put('/weather/:id', function(req, res){
+  var id = req.params.id;
+  var weather = req.body;
+  if(weather && weather._id !== id){
+    return res.status(500).json({err: 'Ids dont match'});
+  }
+  Weather.findByIdAndUpdate(id, weather, {new: true}, function(err, weather){
+    if(err){
+      return res.status(500).json({err: err.message});
+    }
+    res.json({weather: weather, message: 'Weather point updated'});
+  });
+});
+
 module.exports = router;
